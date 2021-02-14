@@ -1,0 +1,39 @@
+{% extends 'bootstrap/base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+{% endblock %}
+
+{% block title %}Your Todo List{% endblock %}
+
+{% block content %}
+<h1>Todo List</h1>
+<hr>
+<div class="tasks">
+    {% if tasks %}
+        {% for task in tasks %}
+    <ul>
+           <li>Task: {{task.task}}
+                <p>Due: {{task.due}}</p>
+           <span>Click When Finished:</span>
+                <a href="{{ url_for('delete_task', id=task.id) }}" class="button delete-button">✅</a>
+           </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <h2>You're Free! 🙌</h2>
+
+    {% endif %}
+</div>
+<hr>
+    <div class="container">
+  <div class="row">
+      <h1>Add a New Task</h1>
+
+      {{ wtf.quick_form(form, novalidate=True) }}
+  </div>
+    </div>
+
+{% endblock %}
